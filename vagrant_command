@@ -1,0 +1,1 @@
+vboxmanage guestcontrol webserver  exec "/usr/bin/sudo" --username vagrant --password vagrant --verbose --wait-stdout "ls /tmp/"
