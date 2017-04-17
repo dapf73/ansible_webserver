@@ -15,6 +15,26 @@
     - name: disable selinux
       selinux:
         state: disabled
+      register: slnx
+
+    - name: restart host
+      shell: reboot
+      async: 0
+      poll: 0
+      register: restart_sleeper
+      when: slnx.changed
+
+    - name: wait for host to come up
+      local_action: wait_for host=wsrv-prod state=started
+      when: slnx.changed
+
+  #    - name: wait for host to come up
+  #      async_status: jid={{ restart_sleeper.ansible_job_id }}
+  #      register: job_result
+  #      until: job_result.finished
+  #      retries: 30
+
+
 
     - name: install required packages
       yum:
@@ -55,4 +75,5 @@
       service:
         name: httpd
         state: restarted
+
 

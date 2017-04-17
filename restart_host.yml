@@ -1,0 +1,6 @@
+- name: restart host
+  shell: reboot
+  async: 60
+  poll: 5
+- name: wait for host to come up
+  local_action: wait_for host=wsrv state=started
