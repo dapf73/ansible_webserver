@@ -21,7 +21,6 @@
       shell: reboot
       async: 0
       poll: 0
-      register: restart_sleeper
       when: slnx.changed
 
     - name: wait for host to come up
