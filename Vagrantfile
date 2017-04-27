@@ -6,38 +6,28 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.box = "bento/centos-6.8-i386"
 
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 443, host: 8443
+  config.ssh.insert_key = false
+
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
-     vb.name = "webserver"
-     # Display the VirtualBox GUI when booting the machine
-     vb.gui = false
-     # Customize the amount of memory on the VM:
-     vb.memory = "512"
-   end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
+    config.vm.define "vagrant0" do |vagrant1|
+        vagrant1.vm.box = "bento/centos-6.8-i386"
+        vagrant1.vm.network "forwarded_port", guest: 80,  host: 8080
+        vagrant1.vm.network "forwarded_port", guest: 443, host: 8440
+    end
+    config.vm.define "vagrant1" do |vagrant2|
+        vagrant2.vm.box = "bento/centos-6.8-i386"
+        vagrant2.vm.network "forwarded_port", guest: 80,  host: 8081
+        vagrant2.vm.network "forwarded_port", guest: 443, host: 8441
+    end
+    config.vm.define "vagrant2" do |vagrant3|
+        vagrant3.vm.box = "bento/centos-6.8-i386"
+        vagrant3.vm.network "forwarded_port", guest: 80,  host: 8082
+        vagrant3.vm.network "forwarded_port", guest: 443, host: 8442
+    end
 
-  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-  # such as FTP and Heroku are also available. See the documentation at
-  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
 end
