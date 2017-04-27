@@ -13,21 +13,11 @@ Vagrant.configure("2") do |config|
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
-  #
-    config.vm.define "vagrant0" do |vagrant1|
-        vagrant1.vm.box = "bento/centos-6.8-i386"
-        vagrant1.vm.network "forwarded_port", guest: 80,  host: 8080
-        vagrant1.vm.network "forwarded_port", guest: 443, host: 8440
+  for i in 0..5 do
+    config.vm.define "vagrant%s" % i  do |vagrant|
+        vagrant.vm.box = "bento/centos-6.8-i386"
+        vagrant.vm.network "forwarded_port", guest: 80,  host: 8080+i
+        vagrant.vm.network "forwarded_port", guest: 443, host: 8440+i
     end
-    config.vm.define "vagrant1" do |vagrant2|
-        vagrant2.vm.box = "bento/centos-6.8-i386"
-        vagrant2.vm.network "forwarded_port", guest: 80,  host: 8081
-        vagrant2.vm.network "forwarded_port", guest: 443, host: 8441
-    end
-    config.vm.define "vagrant2" do |vagrant3|
-        vagrant3.vm.box = "bento/centos-6.8-i386"
-        vagrant3.vm.network "forwarded_port", guest: 80,  host: 8082
-        vagrant3.vm.network "forwarded_port", guest: 443, host: 8442
-    end
-
+  end
 end
