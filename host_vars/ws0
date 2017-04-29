@@ -1,4 +1,3 @@
-servername: webserver
 certificate: files/webserver/httpd.crt
 private_key: files/webserver/httpd.key
 

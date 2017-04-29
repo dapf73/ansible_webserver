@@ -1,6 +1,11 @@
 # webeserver ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
 
-[prod]
-wsrv-prod ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
+[prod:children]
+wsrv
+
+[wsrv]
+ws0 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=/home/diego/.vagrant.d/insecure_private_key
+
+
 
 [lab]
